@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jokerge/pages/home.dart';
+import 'package:jokerge/pages/navigation.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: NavigationLayout(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jokerge/pages/orders.dart';
 
 class NavigationLayout extends StatefulWidget {
   const NavigationLayout({super.key});
@@ -11,17 +12,7 @@ class NavigationLayout extends StatefulWidget {
 class _NavigationLayoutState extends State<NavigationLayout> {
   int currentPageIndex = 0;
   List<Widget> pages = [
-    const Card(
-      shadowColor: Colors.transparent,
-      margin: EdgeInsets.all(8.0),
-      child: SizedBox.expand(
-        child: Center(
-          child: Text(
-            'Order page',
-          ),
-        ),
-      ),
-    ),
+    const OrdersPage(),
     const Card(
       shadowColor: Colors.transparent,
       margin: EdgeInsets.all(8.0),
@@ -71,7 +62,7 @@ class _NavigationLayoutState extends State<NavigationLayout> {
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         selectedIndex: currentPageIndex,
-        indicatorColor: Colors.amber,
+        indicatorColor: CupertinoColors.systemCyan,
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;

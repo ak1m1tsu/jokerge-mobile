@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:jokerge/pages/login.dart';
 import 'package:jokerge/pages/navigation.dart';
+import 'package:jokerge/services/cache.dart';
 
-void main() {
+Widget _defaultScreen = LoginPage();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (await AccountCache.getCredentials() != null) {
+    _defaultScreen = const NavigationLayout();
+  }
+
   runApp(const MainApp());
 }
 
@@ -10,9 +21,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NavigationLayout(),
+      builder: EasyLoading.init(),
+      routes: {
+        "/": (context) => _defaultScreen,
+        "/home": (context) => const NavigationLayout(),
+        "/login": (context) => LoginPage(),
+      },
     );
   }
 }

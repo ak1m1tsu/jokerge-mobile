@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jokerge/models/models.dart';
 import 'package:jokerge/utils/color_by_status.dart';
-import 'package:jokerge/widgets/app_bar.dart';
-import 'package:jokerge/widgets/list_screen.dart';
-import 'package:jokerge/widgets/product_list.dart';
-import 'package:jokerge/widgets/product_list_item.dart';
+import 'package:jokerge/widgets/listscreen.dart';
+import 'package:jokerge/widgets/product.grid.dart';
 
 class OrderPage extends StatelessWidget {
   final Order order;
@@ -14,21 +12,22 @@ class OrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListScreen(
       crossAxisAligment: CrossAxisAlignment.start,
-      appBar: screenAppBar(context),
-      items: [
-        Text(
+      appBar: AppBar(
+        title: Text(
           "Order #${order.id}",
-          style: TextStyle(
-            color: Colors.grey[900],
-            fontSize: 24,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(
-          order.status,
-          style: TextStyle(
-            fontSize: 16,
-            color: colorByStatus(order.status),
+      ),
+      items: [
+        Center(
+          child: Text(
+            order.status,
+            style: TextStyle(
+              fontSize: 20,
+              color: colorByStatus(order.status),
+            ),
           ),
         ),
         const SizedBox(

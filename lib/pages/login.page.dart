@@ -1,31 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:jokerge/models/models.dart';
 import 'package:jokerge/services/api.dart';
 import 'package:jokerge/services/cache.dart';
-import 'package:jokerge/widgets/login_button.dart';
-import 'package:jokerge/widgets/login_textfiled.dart';
+import 'package:jokerge/widgets/login.button.dart';
+import 'package:jokerge/widgets/login.textfield.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPageBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => LoginPageController());
+  }
+}
 
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+class LoginPageController extends GetxController {
+  final username = TextEditingController();
+  final password = TextEditingController();
 
-  // the user log in method
-  logUserIn(context) {
+  logIn(context) {
     return () async {
-      EasyLoading.show(status: "loading...");
-
       var creds = AccountCredentials(
-        email: usernameController.text,
-        password: passwordController.text,
+        email: username.text,
+        password: password.text,
       );
 
       var ok = await API.login(creds);
-
-      EasyLoading.dismiss();
 
       if (!ok) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -37,18 +37,19 @@ class LoginPage extends StatelessWidget {
       }
 
       await AccountCache.setCredentials(creds);
-      Navigator.restorablePushNamedAndRemoveUntil(
-        context,
-        "/home",
-        (route) => false,
-      );
+      Get.toNamed("/home");
     };
   }
+}
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<LoginPageController>();
+
     return Scaffold(
-      backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
           child: Column(
@@ -72,21 +73,21 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 25),
               // Login
               LoginTextField(
-                controller: usernameController,
+                controller: controller.username,
                 hintText: "Username",
                 obscureText: false,
               ),
               const SizedBox(height: 10),
               // Password
               LoginTextField(
-                controller: passwordController,
+                controller: controller.password,
                 hintText: "Password",
                 obscureText: true,
               ),
               const SizedBox(height: 25),
               // Log In button
               LoginButton(
-                onTap: logUserIn(context),
+                onTap: controller.logIn(context),
               )
             ],
           ),

@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jokerge/services/api.dart';
 import 'package:jokerge/widgets/list_screen.dart';
 import 'package:jokerge/widgets/loader.dart';
@@ -32,6 +31,7 @@ class _OrdersPageState extends State<OrdersPage> {
         }
 
         return ListScreen(
+          crossAxisAligment: CrossAxisAlignment.center,
           items: [
             OrderList(
               orders: snapshot.requireData.toList(),
@@ -40,5 +40,16 @@ class _OrdersPageState extends State<OrdersPage> {
         );
       },
     );
+  }
+}
+
+class OrdersController extends GetxController {
+  final title = 'Orders Page'.obs;
+}
+
+class OrdersBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => OrdersController());
   }
 }

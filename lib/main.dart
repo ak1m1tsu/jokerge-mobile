@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (await AccountCache.getCredentials() != null) {
-    _defaultScreen = const NavigationLayout();
+    _defaultScreen = const NavigationMenu();
   }
 
   runApp(const MainApp());
@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
       builder: EasyLoading.init(),
       routes: {
         "/": (context) => _defaultScreen,
-        "/home": (context) => const NavigationLayout(),
+        "/home": (context) => const NavigationMenu(),
         "/login": (context) => LoginPage(),
       },
     );

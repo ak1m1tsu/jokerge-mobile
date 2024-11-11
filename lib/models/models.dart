@@ -39,6 +39,10 @@ class Order {
         "customer": customer.toJson(),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
       };
+
+  String info() {
+    return "Order #$id";
+  }
 }
 
 class Customer {
@@ -134,6 +138,11 @@ class AccountCredentials {
         "email": email,
         "password": password,
       };
+
+  @override
+  String toString() {
+    return "$email:$password";
+  }
 }
 
 class Account {

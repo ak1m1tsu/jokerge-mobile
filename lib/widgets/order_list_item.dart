@@ -5,19 +5,22 @@ import 'package:jokerge/widgets/order_status_badge.dart';
 
 class OrderListItem extends StatelessWidget {
   final Order order;
-  const OrderListItem({super.key, required this.order});
+  const OrderListItem({
+    super.key,
+    required this.order,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
         ),
-        color: Colors.amber,
+        color: Colors.white,
         child: ListTile(
           title: Text(
-            "Order #${order.id}",
+            order.info(),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,

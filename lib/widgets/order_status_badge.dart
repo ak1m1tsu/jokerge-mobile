@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jokerge/models/const.dart';
+import 'package:jokerge/utils/color_by_status.dart';
 
 class OrderStatusBadge extends StatelessWidget {
   final String status;
@@ -9,7 +9,7 @@ class OrderStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Badge(
-      backgroundColor: _colorFromStatus(status),
+      backgroundColor: colorByStatus(status),
       largeSize: 20,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       label: Text(
@@ -20,18 +20,5 @@ class OrderStatusBadge extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _colorFromStatus(String status) {
-    switch (status) {
-      case orderStatusActive:
-        return Colors.green;
-      case orderStatusCompleted:
-        return Colors.blue;
-      case orderStatusCanceled:
-        return Colors.red;
-      default:
-        return Colors.black;
-    }
   }
 }

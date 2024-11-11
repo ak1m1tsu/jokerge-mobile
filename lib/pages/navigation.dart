@@ -1,17 +1,75 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jokerge/pages/orders.dart';
 
-class NavigationLayout extends StatefulWidget {
-  const NavigationLayout({super.key});
+class NavigationMenu extends StatelessWidget {
+  const NavigationMenu({super.key});
 
   @override
-  State<NavigationLayout> createState() => _NavigationLayoutState();
+  Widget build(BuildContext context) {
+    final controller = Get.put(NavigationController());
+
+    return Scaffold(
+      body: controller.screens[controller.selectedIndex.value],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        title: const Text(
+          "Jokerge",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      bottomNavigationBar: Obx(
+        () => NavigationBar(
+          height: 80,
+          elevation: 0,
+          indicatorColor: Colors.white,
+          backgroundColor: Colors.grey[200],
+          selectedIndex: controller.selectedIndex.value,
+          onDestinationSelected: (index) =>
+              controller.selectedIndex.value = index,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(
+                CupertinoIcons.doc_append,
+                size: 30,
+              ),
+              label: "Orders",
+            ),
+            NavigationDestination(
+              icon: Icon(
+                CupertinoIcons.person_2,
+                size: 30,
+              ),
+              label: "Customers",
+            ),
+            NavigationDestination(
+              icon: Icon(
+                CupertinoIcons.square_list,
+                size: 30,
+              ),
+              label: "Porducts",
+            ),
+            NavigationDestination(
+              icon: Icon(
+                CupertinoIcons.person,
+                size: 30,
+              ),
+              label: "Profile",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _NavigationLayoutState extends State<NavigationLayout> {
-  int currentPageIndex = 0;
-  List<Widget> pages = [
+class NavigationController extends GetxController {
+  final Rx<int> selectedIndex = 0.obs;
+  final screens = [
     const OrdersPage(),
     const Card(
       shadowColor: Colors.transparent,
@@ -47,59 +105,4 @@ class _NavigationLayoutState extends State<NavigationLayout> {
       ),
     ),
   ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Jokerge",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        selectedIndex: currentPageIndex,
-        indicatorColor: CupertinoColors.systemCyan,
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(
-              CupertinoIcons.doc_append,
-              size: 30,
-            ),
-            label: "Orders",
-          ),
-          NavigationDestination(
-            icon: Icon(
-              CupertinoIcons.person_2,
-              size: 30,
-            ),
-            label: "Customers",
-          ),
-          NavigationDestination(
-            icon: Icon(
-              CupertinoIcons.square_list,
-              size: 30,
-            ),
-            label: "Porducts",
-          ),
-          NavigationDestination(
-            icon: Icon(
-              CupertinoIcons.person,
-              size: 30,
-            ),
-            label: "Profile",
-          ),
-        ],
-      ),
-      body: pages[currentPageIndex],
-    );
-  }
 }

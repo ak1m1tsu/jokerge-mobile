@@ -3,7 +3,7 @@ import 'package:jokerge/widgets/icons.dart';
 
 screenAppBar(BuildContext context) {
   return AppBar(
-    backgroundColor: Colors.amber,
+    backgroundColor: Colors.grey[200],
     leading: const IconBack(),
   );
 }
